@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- <link rel="icon" type="image/png" href="https://lh3.googleusercontent.com/ogw/AAEL6sjTDt5AFM1FvJ80n0KDgYtiWedeKK68Loh3QxKMtw=s32-c-mo" sizes="32x32"> -->
+    <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three/examples/jsm/"
+            }
+        }
+    </script>
+    <!-- GitHub https://github.com/takahirox/mmd-parser よりダウンロード -->
+    <script src="./js/mmdparser.js"></script>
+    <!-- GitHub https://github.com/kripken/ammo.js/tree/main/builds よりダウンロード -->
+    <script src="./js/ammo.js"></script>
+    <script src="./js/dist/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+    <script src="./js/dist/progressbar.min.js"></script>
+    <!-- <script src="https://rawgit.com/kimmobrunfeldt/progressbar.js/master/dist/progressbar.min.js"></script> -->
+    <title>model is loading...</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/gamestyle.css">
+</head>
+
+<body>
+    <div id="progressBg">
+        <div id="progressBar">
+            <div id="progress"></div>
+        </div>
+    </div>
+    <!-- The HTML element used to render MMD. -->
+    <div id="webgl"></div>
+
+    <div id="menu_toggle">👉</div>
+    <div id="tool_menu">
+        <div class="section">
+            <h3>模型设置</h3>
+            <div class="model_select">
+                <label for="model_select">选择模型：</label>
+                <select id="model_select"></select>
+            </div>
+            <div class="model_buttons">
+                <button type="button" id="reset_position">重置位置</button>
+                <button type="button" id="reload_model">重载模型</button>
+                <button type="button" id="shadow_toggle">模型阴影: 开</button>
+                <button type="button" class="press_down" id="physics_toggle">物理效果: 关</button>
+            </div>
+
+            <div class="popup">
+                <div class="popup-container">
+                    <div class="popup-content">
+                        <p>❗注意, 物理引擎开启后效果并不理想, 请谨慎使用.</p>
+                        <p>(开启物理引擎后请「 <span class="button-style">重载模型</span> 」)</p>
+                    </div>
+                    <div class="popup-button">
+                        <button type="button" id="popup_confirm">确认开启</button>
+                        <button type="button" id="popup_cancel">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="motion_section" class="section">
+            <div id="motion_pull" class="pull_toggle">🔻</div>
+
+            <h3>动作和姿势</h3>
+
+            <div class="motion_setting">
+                <button type="button" id="png_download">png 图片下载</button>
+                <button type="button" id="webm_recorder">webm 媒体记录</button>
+                <span>动画速度：<span id="motion_speed_value">0.8</span></span>
+                <input type="range" min="0" max="1" step="0.01" id="motion_speed_slider" value="0.8">
+            </div>
+    
+            <div class="motion_toggle">
+                <button type="button" id="motion_form_toggle">动作列表 ⬇</button>
+                <button type="button" id="pose_form_toggle">姿势列表 ⬇</button>
+            </div>
+
+            <form name="motion_form"></form>
+            <form name="pose_form"></form>
+        </div>
+
+        <div id="speak_section" class="section">
+            <div id="speak_pull" class="pull_toggle">🔻</div>
+
+            <h3>模型表情</h3>
+
+            <form name="speak_form">
+                <button type="button" id="start_speak_btn" >开始说话</button>
+                <button type="button" id="pause_speak_btn" >暂停说话</button>
+                <button type="button" id="reset_morph_btn" >重置表情</button>
+            </form>
+    
+            <div id="morph_target_ctls"></div>
+        </div>
+    </div>
+
+    <script type="module" src="./js/main.js"></script>
+    </body>
+
+</html>

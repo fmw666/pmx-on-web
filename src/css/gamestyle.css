@@ -1,0 +1,171 @@
+:root {
+    --theme-color: #ffd54f;
+}
+
+.press_down {
+    box-shadow: inset 2px 2px 5px rgb(0 0 0 / 40%), 1px 1px 1px rgb(255 255 255 / 10%);
+}
+
+button,
+.button-style {
+    background-color: var(--theme-color);
+    /* 黄色 */
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+    color: #1a237e;
+    /* 深蓝色 */
+    cursor: pointer;
+    font-size: 13px;
+    padding: 6px 10px;
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.5);
+    transition: all 0.3s ease;
+}
+
+button:hover,
+.active-btn,
+.pause-btn {
+    background-color: #faac0e;
+    /* 橙色 */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
+    transform: translateY(-2px);
+}
+
+.press_down:hover {
+    /* background-color: #fec95d64; */
+    box-shadow: inset 2px 2px 5px rgb(0 0 0 / 40%), 1px 1px 1px rgb(255 255 255 / 10%);
+}
+
+.pause-btn,
+#popup_cancel {
+    background-color: #d44848;
+    text-shadow: none;
+    color: white;
+}
+
+.pause-btn:hover,
+#popup_cancel:hover {
+    background-color: #d44848af;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    cursor: pointer;
+    background-color: var(--theme-color);
+    /* 滑块颜色 */
+    border: 2px solid #EEEEEE;
+    /* 滑块边框颜色 */
+    height: 20px;
+    width: 20px;
+    -webkit-transition: all 0.2s ease-in-out;
+    /* 动画效果 */
+}
+
+input[type=range]:hover::-webkit-slider-thumb {
+    transform: scale(1.2);
+    /* 滑块放大效果 */
+}
+
+select {
+    appearance: none;
+    /* 取消系统默认样式 */
+    background-color: #FFFFFF;
+    /* 下拉框背景颜色 */
+    border: 2px solid #EEEEEE;
+    /* 下拉框边框颜色 */
+    padding: 5px 10px;
+    width: 60%;
+    transition: all 0.2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    /* 动画效果 */
+}
+
+select:focus {
+    outline: none;
+    box-shadow: 0 0 4px var(--theme-color);
+    /* 下拉框获取焦点时的阴影效果 */
+}
+
+select option {
+    background-color: #FFFFFF;
+    /* 下拉框选项背景颜色 */
+    color: #212121;
+    /* 下拉框选项文字颜色 */
+}
+
+select:before {
+    content: '\25BC';
+    /* 自定义下拉箭头图标 */
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    color: #212121;
+    /* 下拉箭头颜色 */
+    transition: all 0.2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    /* 动画效果 */
+}
+
+select:hover:before {
+    transform: translateY(-50%) rotate(180deg);
+    /* 下拉箭头旋转效果 */
+}
+
+h1 {
+    font-size: 36px;
+    color: #212121;
+    /* 文字颜色 */
+    transition: all 0.2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    /* 动画效果 */
+}
+
+h1:hover {
+    color: #F44336;
+    /* 文字颜色变化 */
+}
+
+hr {
+    border: none;
+    height: 4px;
+    background-color: rgb(255, 213, 79);
+    background-image: linear-gradient(to right, rgba(255, 213, 79, 0), rgb(255, 213, 79), rgba(255, 213, 79, 0));
+}
+
+section {
+    background-color: rgb(255, 213, 79);
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+section h2 {
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* 定义滚动条的样式 */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: rgb(220, 220, 220);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 213, 79, 0.7);
+    border-radius: 10px;
+}
+
+/* 当滚动条被悬停时的样式 */
+::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 213, 79, 0.9);
+}
+
+/* 当滚动条处于活动状态（例如拖动）时的样式 */
+::-webkit-scrollbar-thumb:active {
+    background-color: rgba(255, 213, 79, 1);
+}
