@@ -36,6 +36,7 @@ export function LoadAudio( audioFile ) {
         // audio.play();
         readySpeakFlag = true;
     });
+    analyser = new AudioAnalyser( audio, fftSize );
 }
 
 function onMorphTargetSliderChanged(event) {
@@ -153,48 +154,44 @@ function transformValue(v, x=0, y=1) {
 }
 
 const fftMap = {
-    0: {
+    // 嘴O形缩放
+    "あ": {
         idx: 0,
         x: 0.35,
         y: 0.4
     },
-    5: {
+    // 嘴左右方形缩放
+    "い": {
         idx: 54,
         x: 0,
         y: 1
     },
-    9: {
+    // 嘴向中间挤压
+    "お": {
         idx: 6,
         x: 0,
         y: 1
     },
-    19: {
+    // 惊喜（上睫毛上提）
+    "びっくり": {
         idx: 57,
         x: 0,
         y: 1
     },
-    20: {
+    // 眉毛微笑
+    "にこり": {
         idx: 48,
         x: 0,
         y: 1
     },
-    21: {
+    // 眉毛上移
+    "上": {
         idx: 24,
         x: 0,
         y: 1
     },
-    23: {
+    "俯瞰煽り": {
         idx: 12,
-        x: 0,
-        y: 1
-    },
-    27: {
-        idx: 36,
-        x: 0,
-        y: 1,
-    },
-    30: {
-        idx: 30,
         x: 0,
         y: 1
     },
@@ -205,7 +202,7 @@ function fft2Morph(fft) {
     Object.assign(ret, defaultMorphTargetDict);
     for (const key in fftMap) {
         const val = fftMap[key];
-        ret[morphTargetKeys[key]] = transformValue(fft[val.idx], val.x, val.y);
+        ret[key] = transformValue(fft[val.idx], val.x, val.y);
     }
     return ret;
 }
@@ -213,7 +210,6 @@ function fft2Morph(fft) {
 export function UpdateMorphTargetByAudio() {
     let fft;
     if (audio.isPlaying) {
-        analyser = new AudioAnalyser( audio, fftSize );
         analyser.getFrequencyData();
         fft = analyser.data;
 
