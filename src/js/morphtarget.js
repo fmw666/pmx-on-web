@@ -17,6 +17,7 @@ let defaultMorphTargetDict = {};
 let readySpeakFlag = false;
 // 0-开始说话 1-暂停说话 2-继续结束
 let speakStatus = 0;
+let $startSpeakBtn = $("#start_speak_btn");
 
 // audio init
 const listener = new AudioListener();
@@ -132,7 +133,6 @@ export function LoadModel(_mesh) {
     resetMorphTarget();
 
     // bind button event
-    let $startSpeakBtn = $("#start_speak_btn");
     $startSpeakBtn.off("click").on("click", function() {
         // 0-开始说话 1-暂停说话 2-继续结束
         if (speakStatus === 0) {
