@@ -46,7 +46,8 @@ export function ResetAudio() {
     audio.stop();
     audio.currentTime = 0;
     audio.isPlaying = false;
-    readySpeakFlag = false;
+
+    speakStatus = 0;
     $startSpeakBtn.text("开始说话");
     if ($startSpeakBtn.hasClass("pause-btn")) {
         $startSpeakBtn.toggleClass("pause-btn");
@@ -55,17 +56,8 @@ export function ResetAudio() {
 
 // audio play end callback
 audio.onEnded = function() {
-    audio.stop();
-    audio.currentTime = 0;
-    audio.isPlaying = false;
-
     resetMorphTarget();
-
-    speakStatus = 0;
-    $("#start_speak_btn").text("开始说话");
-    if ($("#start_speak_btn").hasClass("pause-btn")) {
-        $("#start_speak_btn").toggleClass("pause-btn");
-    }
+    ResetAudio();
 }
 
 function onMorphTargetSliderChanged(event) {
