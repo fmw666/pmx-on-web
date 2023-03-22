@@ -1,5 +1,5 @@
 import { InitMenu } from './menu.js';
-import { LoadModel, LoadAudio, UpdateMorphTargetByAudio, onMorphTargetChanged } from './morphtarget.js';
+import { LoadModel, LoadAudio, ResetAudio, UpdateMorphTargetByAudio, onMorphTargetChanged } from './morphtarget.js';
 import { MODEL_FILES, VMD_FILES, VPD_FILES } from './data/filelist.js';
 
 // three.js -- check if it has been loaded successfully.
@@ -563,6 +563,8 @@ $('#reload_model').on('click', function () {
 // model select event
 $('#model_select').on('change', function() {
     let val = $(this).val();
+    // reset audio
+    ResetAudio();
     // destroy the previous model
     if (mesh !== {}) {
         mesh.pose();

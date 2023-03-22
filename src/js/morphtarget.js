@@ -41,6 +41,17 @@ export function LoadAudio( audioFile ) {
     analyser = new AudioAnalyser( audio, fftSize );
 }
 
+export function ResetAudio() {
+    audio.stop();
+    audio.currentTime = 0;
+    audio.isPlaying = false;
+    readySpeakFlag = false;
+    $startSpeakBtn.text("开始说话");
+    if ($startSpeakBtn.hasClass("pause-btn")) {
+        $startSpeakBtn.toggleClass("pause-btn");
+    }
+}
+
 // audio play end callback
 audio.onEnded = function() {
     audio.stop();
