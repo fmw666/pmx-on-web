@@ -15,6 +15,8 @@ let defaultMorphTargetDict = {};
 
 // button init
 let readySpeakFlag = false;
+// 0-开始说话 1-暂停说话 2-继续结束
+let speakStatus = 0;
 
 // audio init
 const listener = new AudioListener();
@@ -37,6 +39,21 @@ export function LoadAudio( audioFile ) {
         readySpeakFlag = true;
     });
     analyser = new AudioAnalyser( audio, fftSize );
+}
+
+// audio play end callback
+audio.onEnded = function() {
+    audio.stop();
+    audio.currentTime = 0;
+    audio.isPlaying = false;
+
+    resetMorphTarget();
+
+    speakStatus = 0;
+    $("#start_speak_btn").text("开始说话");
+    if ($("#start_speak_btn").hasClass("pause-btn")) {
+        $("#start_speak_btn").toggleClass("pause-btn");
+    }
 }
 
 function onMorphTargetSliderChanged(event) {
@@ -98,38 +115,71 @@ export function LoadModel(_mesh) {
         $div.append(subDiv);
     }
     // judge if div have event and the event is input
-    if ($div.data("events") && $div.data("events").input) {
-        $div.off("input");
-    }
-    $div.on("input", onMorphTargetSliderChanged);
+    $div.off("input").on("input", onMorphTargetSliderChanged);
 
     // reset morphTarget
     resetMorphTarget();
 
     // bind button event
-    let $pauseSpeakBtn = $("#pause_speak_btn");
-    if ($pauseSpeakBtn.data("events") && $pauseSpeakBtn.data("events").click) {
-        $pauseSpeakBtn.off("click");
-    }
-    $pauseSpeakBtn.on("click", function() {
-        if (audio.isPlaying) {
-            audio.pause();
-            $(this).text("继续播放");
-        } else {
-            audio.play();
-            $(this).text("暂停说话");
-        }
-    });
     let $startSpeakBtn = $("#start_speak_btn");
-    if ($startSpeakBtn.data("events") && $startSpeakBtn.data("events").click) {
-        $startSpeakBtn.off("click");
-    }
-    $startSpeakBtn.on("click", function() {
-        if (readySpeakFlag) {
-            audio.play();
-            $(this).attr("disabled", true);
+    $startSpeakBtn.off("click").on("click", function() {
+        // 0-开始说话 1-暂停说话 2-继续结束
+        if (speakStatus === 0) {
+            if (readySpeakFlag) {
+                audio.play();
+                speakStatus = 1;
+                $(this).text("暂停说话")
+                $(this).toggleClass("pause-btn");
+            }
+        } else if (speakStatus === 1) {
+            if (audio.isPlaying) {
+                audio.pause();
+                speakStatus = 2;
+                $(this).text("继续说话")
+                $(this).toggleClass("pause-btn");
+            }
+        } else if (speakStatus === 2) {
+            if (!audio.isPlaying) {
+                audio.play();
+                speakStatus = 1;
+                $(this).text("暂停说话")
+                $(this).toggleClass("pause-btn");
+            }
         }
     });
+
+    let $loadAudioBtn = $("#load_audio_btn");
+    $loadAudioBtn.off("change").on("change", function() {
+        let file = $loadAudioBtn.prop("files")[0];
+
+        // 用户选择文件，只能选择 mp3, wav, ogg 格式
+        if (/\.(mp3|wav|ogg)$/i.test(file.name)) {
+            if (audio.isPlaying) {
+                audio.stop();
+            }
+            $startSpeakBtn.text("加载中...");
+            $startSpeakBtn.prop("disabled", true);
+            if ($startSpeakBtn.hasClass("pause-btn")) {
+                $startSpeakBtn.toggleClass("pause-btn");
+            }
+            
+            const loader = new AudioLoader();
+            loader.load( URL.createObjectURL(file), function ( buffer ) {
+                audio.setBuffer( buffer );
+                audio.setLoop( false );
+                audio.setVolume( 0.5 );
+                // audio.play();
+                readySpeakFlag = true;
+                $startSpeakBtn.text("开始说话");
+                $startSpeakBtn.prop("disabled", false);
+                speakStatus = 0;
+            });
+            analyser = new AudioAnalyser( audio, fftSize );
+        } else {
+            alert("请上传 mp3, wav 或 ogg 格式的音频文件！");
+        }
+    });
+    
     let $resetMorphBtn = $("#reset_morph_btn");
     if ($resetMorphBtn.data("events") && $resetMorphBtn.data("events").click) {
         $resetMorphBtn.off("click");
