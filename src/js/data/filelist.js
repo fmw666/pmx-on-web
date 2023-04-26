@@ -76,7 +76,8 @@ export const MODEL_FILES = {
     "雷电将军1": "./../assets/3d-models/genshin/雷电将军/1/雷电将军.pmx",
     "香菱1": "./../assets/3d-models/genshin/香菱/1/香菱.pmx",
     "魈1": "./../assets/3d-models/genshin/魈/1/魈.pmx",
-    "鹿野院平藏1": "./../assets/3d-models/genshin/鹿野院平藏/1/鹿野院平藏.pmx"
+    "鹿野院平藏1": "./../assets/3d-models/genshin/鹿野院平藏/1/鹿野院平藏.pmx",
+    "艾丝妲": "./../assets/3d-models/starrail/艾丝妲/星穹铁道—艾丝妲160.pmx",
 }
 
 export const VMD_FILES = [
